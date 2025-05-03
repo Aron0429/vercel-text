@@ -32,10 +32,10 @@ app.post('/create', async (req, res) => {
 
   talks.save().then(
     talk => {
-      res.send('成功')
+      res.status(200).send('成功')
     },
     error => {
-      res.send(error)
+      res.status(200).send(error)
     },
   )
 })
@@ -45,10 +45,10 @@ app.get('/getTalk', (req, res) => {
   const query = new AV.Query('Talks')
   query.find().then(
     counters => {
-      res.send(counters)
+      res.status(200).send(counters)
     },
     error => {
-      res.send(error)
+      res.status(200).send(error)
     },
   )
 })

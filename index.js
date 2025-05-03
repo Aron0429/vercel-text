@@ -8,9 +8,9 @@ const { LEAN_ID, LEAN_KEY, LEAN_MASTER_KEY, LEAN_SERVER } = process.env
 // process.env.
 AV.Cloud.useMasterKey(true)
 AV.init({
-  appId: 'lwbXnvoNIqG3qCB4hegleYrS-MdYXbMMI',
-  appKey: 'b5Yx8DMBXQVplVwWcrI5niFF',
-  masterKey: 'xyKAWlk6uyk44m10yoU2gF4g',
+  appId: LEAN_ID,
+  appKey: LEAN_KEY,
+  masterKey: LEAN_MASTER_KEY,
   serverURL: LEAN_SERVER,
 })
 

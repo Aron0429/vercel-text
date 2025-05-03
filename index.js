@@ -4,19 +4,24 @@ const AV = require('leancloud-storage')
 
 const { LEAN_ID, LEAN_KEY, LEAN_MASTER_KEY, LEAN_SERVER } = process.env
 
-AV.Cloud.useMasterKey(true)
-AV.init({
-  appId: LEAN_ID,
-  appKey: LEAN_KEY,
-  masterKey: LEAN_MASTER_KEY,
-  serverURL: LEAN_SERVER,
-})
-
+if (LEAN_ID && LEAN_KEY && LEAN_MASTER_KEY) {
+  AV.Cloud.useMasterKey(true)
+  AV.init({
+    appId: LEAN_ID,
+    appKey: LEAN_KEY,
+    masterKey: LEAN_MASTER_KEY,
+    serverURL: LEAN_SERVER,
+  })
+}
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.get('/', (req, res) => {
+  res.sen(JSON.stringify(AV))
+})
 
 // 简单写一个接口
 app.post('/create', async (req, res) => {

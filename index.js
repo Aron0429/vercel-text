@@ -39,7 +39,7 @@ app.post('/create', async (req, res) => {
       res.status(200).send('成功')
     },
     error => {
-      res.status(200).send(error)
+      res.status(500).send({ code: 500, message: error.message, data: JSON.stringify(error) })
     },
   )
 })
@@ -48,8 +48,6 @@ app.post('/create', async (req, res) => {
 app.get('/getTalk', async (req, res) => {
   try {
     const query = new AV.Query('Talks')
-    query.dscending('createdAt')
-
     const talkList = await query.find()
     res.status(200).send(talkList)
   } catch (error) {

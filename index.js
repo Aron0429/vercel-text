@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
-  res.sen(JSON.stringify(AV))
+  res.send(JSON.stringify(AV))
 })
 
 // 简单写一个接口

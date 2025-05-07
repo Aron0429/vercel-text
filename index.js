@@ -1,4 +1,5 @@
 const cors = require('cors')
+const path = require('path')
 const express = require('express')
 const AV = require('leancloud-storage')
 
@@ -18,7 +19,7 @@ const app = express()
 app.set('etag', false)
 app.set('view engine', 'pug')
 app.set('view cache', false)
-app.set('views', './views')
+app.set('views', path.join(__dirname, 'views'))
 
 app.use(cors())
 app.use('/public', express.static('public'))

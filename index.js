@@ -15,12 +15,18 @@ if (LEAN_ID && LEAN_KEY && LEAN_MASTER_KEY) {
 }
 const app = express()
 
+app.set('etag', false)
+app.set('view engine', 'pug')
+app.set('view cache', false)
+app.set('views', './views')
+
 app.use(cors())
+app.use('/public', express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
-  res.send('Hello World')
+  res.render('index')
 })
 
 // 简单写一个接口

@@ -1,0 +1,45 @@
+- const menus = [{path: '/', text: '首页'},{path: '/create', text: '发布说说'},{path: '/list', text: '说说管理'}]
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="renderer" content="webkit")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+    meta(http-equiv="Access-Control-Allow-Origin" content="*")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
+    meta(name="apple-mobile-web-app-status-bar-style" content="black")
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="format-detection" content="telephone=no")
+    title= title
+    link(rel='stylesheet' href='https://cdn.staticfile.net/layui/2.9.4/css/layui.min.css')
+    link(rel='stylesheet' href='/public/css/cherry-markdown.min.css')
+    link(rel='stylesheet' href='/public/css/layout.css')
+    block style
+  body.layui-layout-body
+    div.layui-layout.layui-layout-admin
+      div.layui-header
+        div.layui-logo.layui-bg-black
+          img(src="/public/img/logo.png")
+          = "DM Talk"
+        ul.layui-nav.layui-layout-right
+          li.layui-nav-item
+            a(href="javascript:;") 管理员
+            dl.layui-nav-child
+              dd
+                a(href="javascript:;") 基本资料
+              dd
+                a(href="javascript:;") 修改密码
+              dd
+                a.login-out(href="javascript:;") 退出登录
+      //- 左侧菜单
+      div.layout-menu-left.layui-side.layui-bg-black
+        ul.layui-nav.layui-nav-tree
+          each item in menus
+            li.layui-nav-item(class=`${href == item.path ? 'layui-this': ''}`)
+              a(href=`${item.path}`)=item.text
+      //- 内容主体区域
+      div.layui-body
+        div.layout-content
+          block content
+    block script
+    script(src='/public/js/layui.min.js')

@@ -1,0 +1,102 @@
+extends  layout.pug
+
+block style
+  link(rel='stylesheet' href='/public/css/create.css')
+
+block content
+  div.page-wrap
+    form.layui-form.layui-form-pane
+      div.layui-form-item
+        div
+          label.layui-form-label 昵称
+          div.layui-input-inline
+            input.layui-input(type='text' name='nickName' placeholder='请输入昵称')
+        div.avator
+          label.layui-form-label 头像
+          div.layui-input-inline
+            input.layui-input(type='text' name='avator' placeholder='请输入头像地址')
+      div.layui-form-item(style="justify-content: start;")
+        div
+          label.layui-form-label 日期
+          div.layui-input-inline
+            input#date.layui-input(name="date" type="text" placeholder='默认为当前时间')
+        div
+          label.layui-form-label 标签
+          div.layui-input-inline
+            input.layui-input(type='text' name='tags' placeholder='请输入标签(多个标签请用,分隔)')
+        div
+          label.layui-form-label 开启评论
+          div.layui-input-inline(style="width:55px;")
+            input(type="checkbox" name="comment" lay-skin="switch" lay-filter="comment")
+        div#key-wrap.hide
+          label.layui-form-label Key
+          div.layui-input-inline(style="margin-right:0px;")
+            input.layui-input(type='text' name='key' placeholder='请输入Key(开启评论需填写key)')
+        div.btn-wrap
+          button.layui-btn(type="button" lay-submit lay-filter="markdown") 发布MarkDown格式
+          button.layui-btn(type="button" lay-submit lay-filter="html") 发布HTML格式
+          button#reset.layui-btn.layui-btn-primary(type="reset") 重置
+    div#markdown-container
+
+block script
+  script(src='/public/js/cherry-markdown.core.js')
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      let editor
+      const $switch = document.getElementById('key-wrap')
+      const $reset = document.getElementById('reset')
+      const initMarkdown = () => {
+        editor = new Cherry({
+          id: 'markdown-container',
+          value: '',
+          editor: { defaultModel: 'editOnly', showSuggestList: false },
+          toolbars: {
+            toolbar: [
+              'switchModel',
+              '|',
+              { bold: ['bold', 'italic', 'underline', 'strikethrough'] },
+              'quote',
+              'header',
+              'size',
+              'color',
+              '|',
+              { insert: ['ul', 'ol', 'image', 'link', 'hr', 'code', 'table'] },
+            ],
+            toc: false,
+            bubble: false,
+            float: false,
+          },
+        })
+      }
+
+      const initLayUI = () => {
+        layui.use('laydate', function () {
+          var laydate = layui.laydate
+          laydate.render({ elem: '#date' })
+        })
+
+        layui.use('form', function () {
+          var form = layui.form
+
+          form.on('submit(markdown)', function (data) {
+            layer.msg(JSON.stringify(data.field))
+            console.log(editor.getMarkdown())
+            return false
+          })
+
+          form.on('submit(html)', function (data) {
+            layer.msg(JSON.stringify(data.field))
+            console.log(editor.getHtml())
+            return false
+          })
+
+          form.on('switch(comment)', function (data) {
+            $switch.classList.toggle('hide')
+          })
+        })
+        $reset.click()
+      }
+
+      initMarkdown()
+      initLayUI()
+    })
